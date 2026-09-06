@@ -33,7 +33,7 @@ package Secret_Sharing is
      (Secret    : GF_Element;
       N         : Share_ID;
       Threshold : Threshold_Type) return Shamir_Share_Array
-     with Pre  => Threshold <= N,
+     with Pre  => Integer (Threshold) <= Integer (N),
           Post => Split_Shamir'Result'Length = Positive (N);
 
    --  Reconstructs the secret using Lagrange interpolation.
