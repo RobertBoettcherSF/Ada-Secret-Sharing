@@ -75,7 +75,7 @@ begin
    declare
       S1 : constant Shamir_Share := (X => 1, Y => 100);
       S2 : constant Shamir_Share := (X => 1, Y => 200); -- intentionally duplicate X
-      Arr : constant Shamir_Share_Array (1 .. 2) := (1 => S1, 2 => S2);
+      Arr : constant Shamir_Share_Array (1 .. 2) := [1 => S1, 2 => S2];
       Caught : Boolean := False;
    begin
       Check ("5.1 Arr length is 2", Arr'Length = 2);
@@ -171,9 +171,9 @@ begin
    declare
       Secret : constant GF_Element := 8888;
       Shares : constant Shamir_Share_Array := Split_Shamir (Secret, 4, 2);
-      Sub1   : constant Shamir_Share_Array (1 .. 2) := (1 => Shares (1), 2 => Shares (4));
-      Sub2   : constant Shamir_Share_Array (1 .. 2) := (1 => Shares (2), 2 => Shares (3));
-      Sub3   : constant Shamir_Share_Array (1 .. 2) := (1 => Shares (3), 2 => Shares (4));
+      Sub1   : constant Shamir_Share_Array (1 .. 2) := [1 => Shares (1), 2 => Shares (4)];
+      Sub2   : constant Shamir_Share_Array (1 .. 2) := [1 => Shares (2), 2 => Shares (3)];
+      Sub3   : constant Shamir_Share_Array (1 .. 2) := [1 => Shares (3), 2 => Shares (4)];
    begin
       Check ("12.1 Subset {1, 4} reconstructs correctly", Reconstruct_Shamir (Sub1, 2) = Secret);
       Check ("12.2 Subset {2, 3} reconstructs correctly", Reconstruct_Shamir (Sub2, 2) = Secret);
@@ -183,7 +183,7 @@ begin
    --  TEST 13 — Shamir Math Correctness bounds
    Put_Line ("TEST 13 — Shamir Math Correctness bounds");
    declare
-      Secret : constant GF_Element := Prime - 1;
+      Secret : constant GF_Element := GF_Element'Last;
       Shares : constant Shamir_Share_Array := Split_Shamir (Secret, 4, 3);
    begin
       Check ("13.1 Share 1 X mathematically aligns to 1", Shares (1).X = 1);
